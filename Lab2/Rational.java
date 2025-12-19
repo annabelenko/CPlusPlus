@@ -2,7 +2,7 @@ public class Rational {
     private int num, denom;
 
     public Rational(int num, int denom){
-        if (denom == 0) throw new RationalException("Denominator cannot be zero");
+        if (denom == 0) throw new IllegalArgumentException("Denominator cannot be zero");
         int g = gcd(Math.abs(num), Math.abs(denom));
         this.num = num / g;
         this.denom = denom / g;
@@ -78,6 +78,23 @@ public class Rational {
         return Integer.compare(lhs, rhs);
     }
     public boolean equals(Rational r){
-        return this.compareTo(r 
+        return this.compareTo(r) == 0;
+    }
+    public String toString() {
+        if(denom ==1) return Integer.toString(num);
+        return num + "/" + denom;
+    }
+    private void normalize(){
+        int g = gcd(Math.abs(num), Math.abs(denom));
+        num /= g;
+        denom /= g;
+        if (denom < 0){
+            num = -num;
+            denom = -denom;
+        }
+    }
+    private static int gcd(int a, int b){
+        if(b ==0) return a;
+        return gcd(b, a % b);
     }
 }
